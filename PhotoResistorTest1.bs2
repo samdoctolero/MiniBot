@@ -1,0 +1,18 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+'Photoresister test 1
+PAUSE 1000
+DEBUG CLS
+
+DO
+  DEBUG HOME, "IN6 = ", BIN IN6
+  PAUSE 100
+   'GOSUB MoveForward
+LOOP
+
+MoveForward:
+      PULSOUT 13,950
+      PULSOUT 12,450
+      PAUSE 20
+RETURN

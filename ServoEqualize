@@ -1,0 +1,27 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+'Equalize Servos
+'At 750 both servos should not move therefore
+'Anything less than 750 will make the wheel turn clockwise
+'Anything above 50 will turn the wheel counter-clockwise
+
+DEBUG "Program Running!"
+
+DO
+      GOSUB MoveBack
+LOOP
+
+
+
+
+MoveForward:
+      PULSOUT 13,950
+      PULSOUT 12,450
+      PAUSE 20
+RETURN
+
+MoveBack:
+      PULSOUT 13,450
+      PULSOUT 12,950
+      PAUSE 20
+RETURN
