@@ -18,33 +18,30 @@
     <ClCompile Include="SAM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PosixSignalDispatcher.cpp">
+    <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SerialPort.cpp">
+    <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SerialStream.cc">
+    <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SerialStreamBuf.cc">
+    <ClCompile Include="Servo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PosixSignalDispatcher.h">
+    <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PosixSignalHandler.h">
+    <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SerialPort.h">
+    <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SerialStream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SerialStreamBuf.h">
+    <ClInclude Include="Servo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
