@@ -76,7 +76,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="PosixSignalDispatcher.cpp" />
     <ClCompile Include="SAM.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
+    <ClCompile Include="SerialStream.cc" />
+    <ClCompile Include="SerialStreamBuf.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PosixSignalDispatcher.h" />
+    <ClInclude Include="PosixSignalHandler.h" />
+    <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="SerialStream.h" />
+    <ClInclude Include="SerialStreamBuf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
