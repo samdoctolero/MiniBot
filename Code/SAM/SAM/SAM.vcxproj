@@ -76,7 +76,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.c" />
+    <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.c" />
+    <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.c" />
     <ClCompile Include="SAM.cpp" />
+    <ClCompile Include="Servo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.h" />
+    <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.h" />
+    <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.h" />
+    <ClInclude Include="Servo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
