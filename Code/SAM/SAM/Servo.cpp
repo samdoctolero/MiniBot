@@ -6,28 +6,23 @@ Uses softPwm.c functions from WiringPi (Gordon Projects)
 
 
 #include "Servo.h"
-#include "softPwm.h"
+#include "WiringPi\softPwm.h"
+#include "WiringPi\wiringPi.h"
 
-#define WHEEL_RADIUS 26; //in CM (measure wheel radius)
-
-//Define class global variables
-struct Wheel
+void Servo::SetPin(int PinNum)
 {
-	int Pin;
-};
-
-
-
-int Travel(int distance) 
-{
-	//Figure out distance and duration of loop relationship 
-	//softPwmWrite()
+	Pin = PinNum;
 }
 
+void Servo::SetRadius(int RadNum)
+{
+	Radius = RadNum;
+}
 
 Servo::Servo()
 {
-
+	wiringPiSetup();
+	softPwmCreate(this->Pin, 0, 100);
 }
 
 
