@@ -79,13 +79,22 @@
     <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.c" />
     <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.c" />
     <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.c" />
+    <ClCompile Include="PosixSignalDispatcher.cpp" />
     <ClCompile Include="SAM.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
+    <ClCompile Include="SerialStream.cc" />
+    <ClCompile Include="SerialStreamBuf.cc" />
     <ClCompile Include="Servo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.h" />
     <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.h" />
     <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.h" />
+    <ClInclude Include="PosixSignalDispatcher.h" />
+    <ClInclude Include="PosixSignalHandler.h" />
+    <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="SerialStream.h" />
+    <ClInclude Include="SerialStreamBuf.h" />
     <ClInclude Include="Servo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
