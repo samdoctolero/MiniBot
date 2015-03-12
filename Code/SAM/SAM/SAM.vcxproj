@@ -79,17 +79,33 @@
     <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.c" />
     <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.c" />
     <ClCompile Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.c" />
+<<<<<<< HEAD
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="SAM.cpp" />
     <ClCompile Include="Sensors.cpp" />
+=======
+    <ClCompile Include="PosixSignalDispatcher.cpp" />
+    <ClCompile Include="SAM.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
+    <ClCompile Include="SerialStream.cc" />
+    <ClCompile Include="SerialStreamBuf.cc" />
+>>>>>>> 41967187dfb880134996a949b5b760be59b30d0e
     <ClCompile Include="Servo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softPwm.h" />
     <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\softTone.h" />
     <ClInclude Include="..\..\..\WiringPi\wiringPi-5edd177\wiringPi\wiringPi.h" />
+<<<<<<< HEAD
     <ClInclude Include="Light.h" />
     <ClInclude Include="Sensors.h" />
+=======
+    <ClInclude Include="PosixSignalDispatcher.h" />
+    <ClInclude Include="PosixSignalHandler.h" />
+    <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="SerialStream.h" />
+    <ClInclude Include="SerialStreamBuf.h" />
+>>>>>>> 41967187dfb880134996a949b5b760be59b30d0e
     <ClInclude Include="Servo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
