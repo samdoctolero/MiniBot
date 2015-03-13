@@ -1,4 +1,4 @@
-#include "wiringPi.h"
+#include "WiringPi\wiringPi.h"
 #include <stdlib.h>
 
 //Figure out pin numbering on B+
