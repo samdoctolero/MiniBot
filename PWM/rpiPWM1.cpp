@@ -60,8 +60,9 @@ rpiPWM1::rpiPWM1()
  *             - m     (int) - PWM mode (can be either 1 for PWMMODE (rpiPWM1::PWMMODE) 
  *               or 2 for MSMODE (rpiPWM1::MSMODE) 
  ***********************************************************************/
-rpiPWM1::rpiPWM1(double Hz, unsigned int cnts, double duty, int m)
+rpiPWM1::rpiPWM1(double Hz, unsigned int cnts, double duty, int m, int BASE_PIN)
 {
+	this->Pin = BASE_PIN;
   this->clk = mapRegAddr(CLOCK_BASE);
   this->gpio = mapRegAddr(GPIO_BASE);
   this->pwm = mapRegAddr(PWM_BASE);

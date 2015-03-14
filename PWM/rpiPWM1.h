@@ -142,7 +142,11 @@ private:
   static const int BCM2708_PERI_BASE = 0x20000000;
   static const int PWM_BASE = (BCM2708_PERI_BASE + 0x20C000); /* PWM controller */
   static const int CLOCK_BASE = (BCM2708_PERI_BASE + 0x101000); /* Clock controller */
-  static const int GPIO_BASE = (BCM2708_PERI_BASE + 0x200000); /* GPIO controller */
+  //***************************************************************************************************GPIO
+  //static const int GPIO_BASE = (BCM2708_PERI_BASE + 0x200000); /* GPIO controller */
+  //***************************************************************************************************CHANGE_THIS!!!!!
+  int Pin;
+  int GPIO_BASE = (BCM2708_PERI_BASE + Pin); /* GPIO controller */
   //Base register addresses
   static const int PWM_CTL = 0;
   static const int PWM_RNG1 = 4;
