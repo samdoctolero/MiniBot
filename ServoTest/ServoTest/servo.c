@@ -28,7 +28,7 @@
 #include <string.h>
 
 #include <wiringPi.h>
-#include "softServo.h"
+#include <WiringPi\softServo.h>
 
 int main ()
 {
