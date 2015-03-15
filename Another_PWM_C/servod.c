@@ -59,6 +59,7 @@
 #include <sys/mman.h>
 
 // 8 GPIOs to use for driving servos
+//Change this to use 2 pins
 static uint8_t gpio_list[] = {
     4,    // P1-7
     17,    // P1-11
