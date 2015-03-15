@@ -136,6 +136,9 @@ public:
   static const int ERRDUTY = 3;
   static const int ERRMODE = 4;
   //Error Codes
+
+  //int Pin = 0x000000;
+  //int GPIO_BASE = (BCM2708_PERI_BASE + Pin); /* GPIO controller */
   
 private:
   //Private constants
@@ -143,10 +146,8 @@ private:
   static const int PWM_BASE = (BCM2708_PERI_BASE + 0x20C000); /* PWM controller */
   static const int CLOCK_BASE = (BCM2708_PERI_BASE + 0x101000); /* Clock controller */
   //***************************************************************************************************GPIO
-  //static const int GPIO_BASE = (BCM2708_PERI_BASE + 0x200000); /* GPIO controller */
+  static const int GPIO_BASE = (BCM2708_PERI_BASE + 0x200000); /* GPIO controller */
   //***************************************************************************************************CHANGE_THIS!!!!!
-  int Pin;
-  int GPIO_BASE = (BCM2708_PERI_BASE + Pin); /* GPIO controller */
   //Base register addresses
   static const int PWM_CTL = 0;
   static const int PWM_RNG1 = 4;
