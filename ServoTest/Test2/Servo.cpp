@@ -35,6 +35,9 @@
 #define MAX 1500
 #define MIN -250
 
+#define LEFT 1
+#define RIGHT 4
+
 using namespace std;
 
 int main()
@@ -45,19 +48,25 @@ int main()
 		return 1;
 	}
 
-	softServoSetup(0, 1, 2, 3, 4, 5, 6, 7);
+	softServoSetup(-1, RIGHT, -1, -1, -1, -1, -1, -1);
 
 
-	int dutyCycle = -250;
-	while ((dutyCycle >= -MIN) || (dutyCycle <= MAX))
+	int dutyCycle1 = -250;
+	int dutyCycle2 = 1500;
+	//while ((dutyCycle1 >= MIN) && (dutyCycle1 <= MAX))
+	for (int t = 0; t < 300; t++)
 	{
-		cout << "Value: " << dutyCycle << endl;
+		//cout << "Value Left: " << dutyCycle1 << ", Value Right: "<< dutyCycle2 << endl;
+		cout << t << endl;
 		for (int i = 0; i < 10;i++)
 		{ 
-			softServoWrite(1, dutyCycle);
+			//softServoWrite(LEFT, 750);
+			softServoWrite(RIGHT, 750);
+
 			delay(10); //10ms
 		}
-		dutyCycle = dutyCycle + INCRMT;
+		dutyCycle1 = dutyCycle1 + INCRMT;
+		dutyCycle2 = dutyCycle2 - INCRMT;
 	}
 
 	cout << "End of test..." << endl;

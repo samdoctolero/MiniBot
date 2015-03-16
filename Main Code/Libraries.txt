@@ -1,0 +1,4 @@
+wiringPi
+python-dev
+sip-4.16.6
+libserial-0.5.2
