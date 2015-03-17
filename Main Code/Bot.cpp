@@ -4,7 +4,7 @@
 #include <wiringPi.h> //make sure to use -lwiringPi at the end of the compile command
 #include <stdlib.h>
 
-Servos::Bot()
+Bot::Bot()
 {
 	//wiringPi setup by Gordon. Maps and accesses gpios
 	//Initialize wiringPi
@@ -14,25 +14,22 @@ Servos::Bot()
 		exit(1); //If setup fails then exit the main program
 	}
 
-	//initalize servo PWM 
+	//Initalize servo PWM 
 	softServoSetup(LEFT_SERVO, RIGHT_SERVO, -1, -1, -1, -1, -1, -1);
-	LoopContinue - 1;
+
+	//Put values in variables
+	this->LoopContinue - 1;
+
 }
 
 
-Servos::~Bot()
+Bot::~Bot()
 {
 }
 
-Servos::GetLoopContinue()
-{
-	this->LoopContinue;
-}
-
-Servo::SetLoopContinue()
-{
-	this->LoopContinue = 0;
-}
+//Getters and setters implementation
+int Bot::GetLoopContinue(){this->LoopContinue;}
+void Bot::SetLoopContinue(int val){this->LoopContinue = val;}
 
 /*
 Main program loop
@@ -57,7 +54,7 @@ void Begin()
 /*
 Rotate the wheels at certain speeds
 */
-void MoveWheels(int LeftVal, int RightVal, int count)
+void MoveWheels(int LeftSpeed, int RightSpeed, int count)
 {
 	//value1 and value2 should always be between -250 and 1250. 
 	//even if they are outside the boundaries the softServo class takes that into account
@@ -66,12 +63,13 @@ void MoveWheels(int LeftVal, int RightVal, int count)
 	//Midpoint = 500; both wheels should be stopped
 
 	//Left wheel will follow the rotation of the right wheel
-	LeftVal = -LeftVal + 1000; //Take into account that the wheels rotate in opposite directions
+	LeftSpeed = -LeftSpeed + 1000; //Take into account that the wheels rotate in opposite directions
 
+	//count could either be distance or time (don't know how we are going to use it yet...)
 	for (int i = 0; i <= count; i++)
 	{
-		softServoWrite(RIGHT_SERVO, RightVal);
-		softServoWrite(LEFT_SERVO, LeftVal);
+		softServoWrite(RIGHT_SERVO, RightSpeed);
+		softServoWrite(LEFT_SERVO, LeftSpeed);
 		delay(10); //10ms
 	}
 }

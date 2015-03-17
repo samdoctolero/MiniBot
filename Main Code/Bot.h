@@ -10,17 +10,44 @@ class Bot
 #define RIGHT_IR 3 //Pin 0 to control right IR sensor
 #define PING 5 //pin 5 to control ultrasonic sensor
 
+
+
 private:
 	int LoopContinue;
+	Dimension Arena;
+	Dimension FrontCar;
+	Dimension BackCar;
+	Dimension Robot;
+	Dimension Cube;
+
+
 
 public:
+	//structures
+	struct Coordinate
+	{
+		double x; //cm
+		double y; //cm
+	};
+
+	struct Coordinate
+	{
+		double length; //cm
+		double width;  //cm
+	};
+	
+	//variables
+	Coordinate CurrPosition;
+	Coordinate PrevPosition;
+	Coordinate CurrCubePosition;
+
 	//constructor & destructor
 	Bot();
 	~Bot();
 
 	//getters and setters
-	getLoopContinue();
-	setLoopContinue();
+	int getLoopContinue();
+	void setLoopContinue(int val);
 
 	//methods
 	void Begin(); //begins the main loop
