@@ -4,6 +4,8 @@
 #include <wiringPi.h> //make sure to use -lwiringPi at the end of the compile command
 #include <stdlib.h>
 
+using namespace std;
+
 Bot::Bot()
 {
 	//wiringPi setup by Gordon. Maps and accesses gpios
@@ -34,7 +36,7 @@ void Bot::SetLoopContinue(int val){this->LoopContinue = val;}
 /*
 Main program loop
 */
-void Begin()
+void Bot::Begin()
 {
 	while (LoopContinue == 1)
 	{
@@ -54,7 +56,7 @@ void Begin()
 /*
 Rotate the wheels at certain speeds
 */
-void MoveWheels(int LeftSpeed, int RightSpeed, int count)
+void Bot::MoveWheels(int LeftSpeed, int RightSpeed, int count)
 {
 	//value1 and value2 should always be between -250 and 1250. 
 	//even if they are outside the boundaries the softServo class takes that into account
@@ -77,7 +79,7 @@ void MoveWheels(int LeftSpeed, int RightSpeed, int count)
 /*
 Loops continuously until the photoresistor senses enough light.
 */
-void WaitForLight()
+void Bot::WaitForLight()
 {
 	pinMode(PHOTO_RES, INPUT);
 	int read = 0;
@@ -96,19 +98,19 @@ void WaitForLight()
 }
 
 //Returns the distance measurement from the back left sensor
-int BackLeftDistance()
+int Bot::BackLeftDistance()
 {
 
 }
 
 //Returns the distance measurement from the back right sensor
-int BackRightDistance()
+int Bot::BackRightDistance()
 {
 
 }
 
 //Returns the distance measurement straight from the back
-int BackDistance()
+int Bot::BackDistance()
 {
 
 

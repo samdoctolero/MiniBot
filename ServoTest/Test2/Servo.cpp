@@ -31,14 +31,16 @@
 #include <wiringPi.h>
 #include "softServo.h"
 
-#define INCRMT 10
+#define INCRMT 50
 #define MAX 1500
 #define MIN -250
 
-#define LEFT 1
-#define RIGHT 4
+#define LEFT 4
+#define RIGHT 5
 
 using namespace std;
+
+void MoveWheels(int pin1, int pin2, int count);
 
 int main()
 {
@@ -48,27 +50,38 @@ int main()
 		return 1;
 	}
 
-	softServoSetup(-1, RIGHT, -1, -1, -1, -1, -1, -1);
+	softServoSetup(RIGHT, LEFT, -1, -1, -1, -1, -1, -1);
 
+	int value = -250;
 
-	int dutyCycle1 = -250;
-	int dutyCycle2 = 1500;
-	//while ((dutyCycle1 >= MIN) && (dutyCycle1 <= MAX))
-	for (int t = 0; t < 300; t++)
+	while (value <= 1250)
 	{
-		//cout << "Value Left: " << dutyCycle1 << ", Value Right: "<< dutyCycle2 << endl;
-		cout << t << endl;
-		for (int i = 0; i < 10;i++)
-		{ 
-			//softServoWrite(LEFT, 750);
-			softServoWrite(RIGHT, 750);
+		cout << value << endl;
+		MoveWheels(value, value, 50);
+		value = value + INCRMT;
 
-			delay(10); //10ms
-		}
-		dutyCycle1 = dutyCycle1 + INCRMT;
-		dutyCycle2 = dutyCycle2 - INCRMT;
 	}
 
-	cout << "End of test..." << endl;
 	return 0;
+}
+
+
+void MoveWheels(int LeftSpeed, int RightSpeed, int count)
+{
+	//value1 and value2 should always be between -250 and 1250. 
+	//even if they are outside the boundaries the softServo class takes that into account
+	//if value < -250 then value = -250
+	//if value > 1250 then value = 1250
+	//Midpoint = 500; both wheels should be stopped
+
+	//Left wheel will follow the rotation of the right wheel
+	LeftSpeed = -LeftSpeed + 1000; //Take into account that the wheels rotate in opposite directions
+
+	//count could either be distance or time (don't know how we are going to use it yet...)
+	for (int i = 0; i <= count; i++)
+	{
+		softServoWrite(RIGHT, RightSpeed);
+		softServoWrite(LEFT, LeftSpeed);
+		delay(10); //10ms
+	}
 }
