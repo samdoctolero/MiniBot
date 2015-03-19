@@ -109,9 +109,38 @@ int Bot::BackRightDistance()
 
 }
 
-//Returns the distance measurement straight from the back
+//Returns the distance measurement straight from the back using PING
 int Bot::BackDistance()
 {
+	int numScans = 5;
 
+	double cumDistance = 0;
+	for (int i = 0; i < numScans; i++)
+	{
+		pinMode(PING, OUTPUT);
+		digitalWrite(PING, 0); //Reset to zero
+		delay(2);
+		//Start of transmission
+		digitalWrite(PING, 1);
+		delayMicroseconds(5);
+		digitalWrite(PING, 0);
+		//Activated PING to scan
+		//Change pin mode to accept signals
+		pinMode(PING, INPUT);
 
+		delayMicroseconds(750);
+		//once the signal is high then measure how long it stays high;
+		double utime = 0;
+		while (digitalRead(PING) == 1)
+		{
+			delayMicroseconds(8);
+			utime += 8;
+		}
+		cumDistance += utime / 29 / 2;
+		delayMicroseconds(200); //delay 200microseconds before next read
+	}
+
+	double distance = cumDistance / numScan; //average the findings to get the final result
+
+	return distance;
 }
