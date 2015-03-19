@@ -4,27 +4,32 @@
 #include <ctime>
 #include <cmath>
 
+using namespace std;
 
-#define irLedPin 4          // IR Led on this pin
-#define irSensorPin 5       // IR sensor on this pin
+#define irLedPin 15          // IR Led on this pin
+#define irSensorPin 16       // IR sensor on this pin
 
 int irRead(int readPin, int triggerPin); //function prototype
 
-void setup()
+
+int main()
 {
+	if (wiringPiSetup() == -1)
+	{
+		cout << "WiringPi setup faied..." << endl;
+		exit(1); //If setup fails then exit the main program
+	}
+	
 	pinMode(irSensorPin, INPUT);
 	pinMode(irLedPin, OUTPUT);
-	Serial.begin(9600); 
-	// prints title with ending line break 
-	Serial.println("Program Starting"); 
-	// wait for the long string to be sent 
-	delay(100); 
-}
 
-void loop()
-{  
-	Serial.println(irRead(irSensorPin, irLedPin)); //display the results
-	delay(10); //wait for the string to be sent
+	for (int i = 0; i < 50; i++)
+	{
+		cout << (irRead(irSensorPin, irLedPin)) << endl;;
+		delay(2000);
+	}
+
+	return 0;
 }
 
 /******************************************************************************
