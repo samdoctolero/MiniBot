@@ -1,0 +1,11 @@
+Interface IR sensors (Jenny and Janelle)
+Test Servos and modify servo class (Sam and Matt)
+Make Fuzzy Controller Class (Matt and Sam)
+Clean up Sensors Class (Jenny and Janelle)
+Put the hardware together (Everyone)
+Measure bot and cars (Janelle and Jenny)
+Organize/Clean up Bot Class (Matt and Sam)
+Test and modify (Everyone)
+
+If we have time:
+-Add offensive states
