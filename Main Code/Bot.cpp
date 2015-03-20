@@ -16,9 +16,6 @@ Bot::Bot()
 		exit(1); //If setup fails then exit the main program
 	}
 
-	//Initalize servo PWM 
-	softServoSetup(LEFT_SERVO, RIGHT_SERVO, -1, -1, -1, -1, -1, -1);
-
 	//Put values in variables
 	this->LoopContinue - 1;
 
@@ -52,30 +49,6 @@ void Bot::Begin()
 	
 }
 
-
-/*
-Rotate the wheels at certain speeds
-*/
-void Bot::MoveWheels(int LeftSpeed, int RightSpeed, int count)
-{
-	//value1 and value2 should always be between -250 and 1250. 
-	//even if they are outside the boundaries the softServo class takes that into account
-	//if value < -250 then value = -250
-	//if value > 1250 then value = 1250
-	//Midpoint = 500; both wheels should be stopped
-
-	//Left wheel will follow the rotation of the right wheel
-	LeftSpeed = -LeftSpeed + 1000; //Take into account that the wheels rotate in opposite directions
-
-	//count could either be distance or time (don't know how we are going to use it yet...)
-	for (int i = 0; i <= count; i++)
-	{
-		softServoWrite(RIGHT_SERVO, RightSpeed);
-		softServoWrite(LEFT_SERVO, LeftSpeed);
-		delay(10); //10ms
-	}
-}
-
 /*
 Loops continuously until the photoresistor senses enough light.
 */
@@ -96,6 +69,14 @@ void Bot::WaitForLight()
 		}
 	}
 }
+
+
+
+
+
+
+
+
 
 //Returns the distance measurement from the back left sensor
 int Bot::BackLeftDistance()
