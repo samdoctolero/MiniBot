@@ -66,7 +66,7 @@ bool Tester::testProjectionTrvial()
     input3.y = 1.5;
     Point expected3;
     expected3.x = -((9+1.5*sqrt(3.0)) / 4.0);
-    expected3.y = (9+1.5*sqrt(3.0)) / 4.0;
+    expected3.y = (9+1.5*sqrt(3.0)) / (4.0*sqrt(3.0));
     Point answer3 = l3.project(input3);
     	if (answer3 == expected3)
 		return true;
