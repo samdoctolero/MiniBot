@@ -2,3 +2,6 @@ wiringPi
 python-dev
 sip-4.16.6
 libserial-0.5.2
+sudo apt-get install libboost-all-dev
+sudo apt-get install libarmadillo-dev
+sudo apt-get install gfortran
