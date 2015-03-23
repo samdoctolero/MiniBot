@@ -1,0 +1,74 @@
+#include <Servo.h>
+#include <math.h>
+
+#define R_WHEEL 3.3    //cm
+#define R_VEHICLE 5.8  //cm
+#define REQ_V "?v"
+#define CH_V "!k"
+#define ECHO "+"
+
+/*
+Servo left, right;
+float in_left = 1530;
+float in_right = 1470;
+float vleft = 30; //range -200 to 200
+float vright = 30; //range -200 to 200
+const float pi = 3.14159265359;
+float rcoeff[6] = {pow(6.3662199825,-5), -pow(4.4726129897,-5),-pow(2.2218488469861,-2),pow(1.6615778380358,-2),2.651842625540850,-0.094073162720055};
+float lcoeff[6] = {pow(2.13092074544,-4), pow(3.5462478012,-5),-0.069503448463712,0.003596668008845,8.069148918625402,-3.226149394366829};
+*/
+void setup() {
+  // put your setup code here, to run once:
+  
+  left.attach(6);
+  right.attach(5);
+  Serial.begin(9600);
+  Serial.print("Waiting for GO signal...\n");
+  left.writeMicroseconds(1500);
+  right.writeMicroseconds(1500);
+  while(!(Serial.available()))
+  {}
+  left.writeMicroseconds(in_left);
+  right.writeMicroseconds(in_right);
+  Serial.print("Waiting for theta...\n");
+  Serial.flush();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  
+  if(Serial.available())
+  {
+    float theta = Serial.parseFloat()*pi/180;
+    Serial.flush();
+    //Serial.print(theta);Serial.print("\n");
+      float diff = (theta*30*R_VEHICLE)/(R_WHEEL*pi);
+      float d_right =  rcoeff[0]*pow(diff,5) + rcoeff[1]*pow(diff,4)+ rcoeff[2]*pow(diff,3) + rcoeff[3]*pow(diff,2) + rcoeff[4]*diff + rcoeff[5];
+      float d_left =  lcoeff[0]*pow(diff,5) + lcoeff[1]*pow(diff,4)+ lcoeff[2]*pow(diff,3) + lcoeff[3]*pow(diff,2) + lcoeff[4]*diff + lcoeff[5];
+    //Serial.print(d_right);Serial.print("\n");
+    //Serial.print(d_left);Serial.print("\n");
+      if(diff > 0)
+      {
+        if( (vright + d_right <= 200) && (vright - d_right >= -200)){vright = vright + d_right;}
+        else{vleft = vleft - d_left;}
+      }
+      else if (diff < 0)
+      {
+        if((vleft + abs(d_left) <= 200)&&(vleft - abs(d_left) >= -200)){vleft = vleft + abs(d_left);}
+        else{vright = vright - abs(d_right);}
+      }
+      else
+      {
+        vright = vright;
+        vleft = vleft;
+      }
+      
+          in_left = -vleft + 1500;
+        in_right = vright + 1500;
+        left.writeMicroseconds(in_left);
+        right.writeMicroseconds(in_right);
+        
+        Serial.print("vleft: ");Serial.print(vleft);Serial.print("\n");
+        Serial.print("vright: ");Serial.print(vright);Serial.print("\n"); 
+  }
+}
