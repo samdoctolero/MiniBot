@@ -249,13 +249,13 @@ vector<vector<double> > Laser::calculateAngles(vector<double> distanceData)
 	double detectionRange = 239.77; //pg 5
 	double angleStep = detectionRange*(double)clusterCount / (double)(endStep - startStep);
 	
-	double startAngle = 90 - (detectionRange / 2);
+	double startAngle = 90 + (detectionRange / 2);
 
 	vector<vector<double> > combined;
 	combined.reserve(distanceData.size());
 	for (int i = 0; i < distanceData.size(); i++)
 	{
-		double angle = startAngle + angleStep*i;
+		double angle = startAngle - angleStep*i;
 		if (distanceData[i] < 50.0)//assume distance is too far to measure
 			distanceData[i] = 5000.0;
 		if (distanceData[i] < 0.0)
