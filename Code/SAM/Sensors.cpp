@@ -13,8 +13,14 @@ Sensors::Sensors()
 	}
 
 	pingTop = 1;
-	pingBack = 2;
-	PhotoR = 22;
+	pingBack = 4;
+	PhotoR = 6;
+	toggleRx = 7;
+	toggleTx = 0;
+
+	pinMode(toggleRx, INPUT);
+	pinMode(toggleTx, OUTPUT);
+	digitalWrite(toggleTx, 1);
 }
 
 Sensors::~Sensors(){}
@@ -61,6 +67,11 @@ void Sensors::WaitForLight()
 int Sensors::BackDistance()
 {
 	return getDistance(pingBack);
+}
+
+int Sensors::getToggle()
+{
+	return toggleRx;
 }
 
 int Sensors::DetectEdge()
