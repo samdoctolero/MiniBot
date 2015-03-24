@@ -129,21 +129,25 @@ void loop() {
 
 void GivenHeading(float theta)
 {
-  double a = 1000;
+  double a = 100;
+  double l = 10;
+  double r = 0.01;
   float rpm = theta*15/PI;
-  float T = a*((0.383*rpm+0.2589)/2)*0.0001;
+  float T = a*((0.383*rpm+0.2589))*0.0001;
+  float TL = l*T;
+  float TR = r*T;
   
   if(theta > 0)
   {
-    PleftT = PleftT + T;
-    PrightT = PrightT - T;
+    PleftT = PleftT + TL;
+    PrightT = PrightT - TR;
     UpdateParams(PleftT,PrightT);
     
   }
   if (theta < 0)
   {
-    PleftT = PleftT - T;
-    PrightT = PrightT + T;
+    PleftT = PleftT - TL;
+    PrightT = PrightT + TR;
     UpdateParams(PleftT,PrightT);
   }
 }

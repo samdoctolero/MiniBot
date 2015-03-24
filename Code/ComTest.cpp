@@ -13,7 +13,7 @@ int main()
 	Servo.BasicCMD(ServoController::START);
 	Servo.BasicCMD(ServoController::FORWARD);
 
-	for (int i = -40; i < 40;i=i+5)
+	for (int i = 10; i >- 10;i=i-1)
 	{
 		cout << "Heading: " << i<<endl;
 		Servo.AdjustHeading(i);
