@@ -8,7 +8,7 @@
 
 ServoController::ServoController() : serialObj()
 {
-	name = "/dev/ttyACM1";
+	name = "/dev/ttyACM0";
 
 	serialObj.Open(name);
 
@@ -32,6 +32,7 @@ ServoController::ServoController() : serialObj()
 
 	state = STOP;
 
+	serialObj << "+" << "\n";
 }
 
 ServoController::~ServoController()
@@ -64,11 +65,12 @@ bool ServoController::echo()
 
 void ServoController::requestSpeeds()
 {
-	serialObj << "?" << endl;
+	serialObj << "?" << "\n";
 }
 
 void ServoController::readSpeeds(wheel* p)
 {
+	//cout << "Read speed function..." << endl;
 	string read;
 	serialObj >> read; //lefvalue,rightvalue
 	//cout << "DB" << endl;
@@ -78,28 +80,27 @@ void ServoController::readSpeeds(wheel* p)
 	getline(split, sright, ',');
 	p->left = atof(sleft.c_str());//stod(sleft,sleft.length);
 	p->right = atof(sright.c_str());//stod(sright, sright.length);
+	//cout << "Read....Left: " << p->left << "\nRead...Right: " << p->right << endl;
 	//flush();
 }
 
 void ServoController::updateSpeeds(wheel p)
 {
+		//cout << "Left: " << p.left << "\nRight: " << p.right << endl;
+	//wheel check;
+	//do{
 		serialObj << "!" << p.left << "n" << p.right << "\n";
-
-
-		wheel rpm;
-		time2rpm(p, &rpm);
-		wheel angle;
-		rpm2angle(rpm, &angle);
-
-		cout << "Left: " << p.left << "\nRight: " << p.right << endl;
+		//usleep(50);
+		//requestSpeeds();
+		//readSpeeds(&check);
+		//cout << "Left: " << check.left << "\nRight: " << check.right << endl;
+		//if (check.left != p.left)
+		//{
+		//	serialObj << "!" << p.left << "n" << p.right << "\n";
+		//}
+	//} while (check.left != p.left);
+		
 		//cout << "Angle return: " << rad2deg(angle.left - angle.right) << endl << endl;
-
-		wheel x = { 10, 10 };
-		wheel y;
-		rpm2time(x, &y);
-		cout << "Converted to time: " << y.left << "," << y.right << endl;
-		time2rpm(y, &x);
-		cout << "Original rpm: " << x.left << "," << x.right << endl << endl;
 		
 }
 
@@ -161,25 +162,23 @@ void ServoController::BasicCMD(Command cmd)
 		update.left = 0.1;
 		update.right = 0.1;
 		state = START;
+		updateSpeeds(update);
 		break;
 	case FORWARD:
-		update.left = 30;
-		update.right = 30;
+		serialObj << "f" << "\n";
 		state = FORWARD;
 		break;
 	case BACK:
-		update.left = -30;
-		update.right = -30;
+		serialObj << "b" << "\n";
 		state = BACK;
 		break;
 	case STOP:
 		update.left = 0;
 		update.right = 0;
 		state = STOP;
+		updateSpeeds(update);
 		break;
 	}
-	
-	updateSpeeds(update);
 }
 /*
 void ServoController::AdjustHeading(double theta)
@@ -241,17 +240,36 @@ void ServoController::AdjustHeading(double theta)
 
 void ServoController::AdjustHeading(double theta)
 {
+	/*
 	requestSpeeds();
-	wheel curRPM;
-	readSpeeds(&curRPM);
-	double avgRPM = (curRPM.left + curRPM.right) / 2;
+	wheel curT;
+	readSpeeds(&curT);
+	//theta = deg2rad(theta);
 
-	double input=angle2rpm(theta);
+	double rpm = theta * 15 / PI;
 
-	wheel send;
-	send.left = (2 * avgRPM + input) / 2;
-	send.right = (2 * avgRPM - input) / 2;
-	updateSpeeds(send);
+	double T = ((0.383*rpm + 0.2589)/2)*(0.0001); //increment/decrement variable
+	cout << "Increment value: " << T << endl;
+
+	if (theta > 0) //lean to the right
+	{
+		curT.right = curT.right - T;
+		curT.left = curT.left + T;
+	}
+	else if (theta < 0)//lean to the left
+	{
+		curT.right = curT.right + T;
+		curT.left = curT.left - T;
+	}
+
+	updateSpeeds(curT);
+	*/
+	serialObj << "t" << theta  << "\n";
+	requestSpeeds();
+	wheel read;
+	readSpeeds(&read);
+	//cout << "Read...Left: " << read.left << "|| right: " << read.right << endl;
+
 }
 
 double ServoController::deg2rad(double deg)
@@ -270,7 +288,7 @@ void ServoController::rpm2angle(wheel rpm, wheel* theta)
 }
 double ServoController::angle2rpm(double theta)
 {
-	return theta * 30 * BOT_RADIUS / (WHEEL_RADIUS*PI);
+	return (theta * 30 * BOT_RADIUS) / (WHEEL_RADIUS*PI);
 	/*
 	rpm->left = theta.left * 30 * BOT_RADIUS / (WHEEL_RADIUS*PI);
 	rpm->right = theta.right * 30 * BOT_RADIUS / (WHEEL_RADIUS*PI);

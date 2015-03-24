@@ -62,6 +62,7 @@ private:
 	double angle2rpm(double theta);
 	double deg2rad(double deg);
 	double rad2deg(double rad);
+
 	bool LeftInUpperZone(wheel cur, wheel uMax, wheel uMin);
 	bool RightInUpperZone(wheel cur, wheel uMax, wheel uMin);
 
