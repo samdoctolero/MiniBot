@@ -2,6 +2,10 @@
 #include <iostream>
 #include <SerialStream.h>
 #include <vector>
+#include "Point.h"
+#include <algorithm>
+
+#define _USE_MATH_DEFINES
 
 using namespace std;
 using namespace LibSerial;
@@ -12,8 +16,8 @@ public:
 	Laser();
 	~Laser();
 	void requestData();
-	vector<vector<double> > getData(bool timeStamp);
-	vector<vector<double> > getDataCart(bool timeStamp);
+	vector<vector<double> > getData(bool timeStamp, bool smooth);
+	vector<Point> getDataCart(bool timeStamp, double maxDist, bool smooth);
 
 	void flush();
 	void reset();

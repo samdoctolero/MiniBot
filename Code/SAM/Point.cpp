@@ -21,6 +21,13 @@ Point::~Point()
 
 }
 
+double Point::distance(Point other)
+{
+	double x1 = x - other.x;
+	double y1 = y - other.y;
+	return sqrt(x1*x1 + y1*y1);
+}
+
 bool Point::operator==(Point other)
 {
 	return x == other.x && y == other.y;
@@ -29,6 +36,7 @@ bool Point::operator==(Point other)
 string Point::toString()
 {
 	stringstream ss;
-	ss << "(" << x << "," << y << ")";
+	//ss << "(" << x << "," << y << ")";
+	ss << x << "\t" << y;
 	return ss.str();
 }

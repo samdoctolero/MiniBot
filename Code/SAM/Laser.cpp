@@ -5,6 +5,8 @@
 #include <math.h>
 #include <stdexcept>
 
+//tes
+
 Laser::Laser() : serialObj()
 {
 	name = "/dev/ttyACM0";
@@ -65,7 +67,7 @@ void Laser::flush()
 
 bool Laser::checkStatus()
 {
-	cout << "checking status" << endl;
+	//cout << "checking status" << endl;
 	string echo;
 	serialObj >> echo;
 	string status;
@@ -88,7 +90,7 @@ void Laser::requestData()
 	ss << setw(2) << setfill('0') << numScans;
 	string command = ss.str();
 
-	cout << "command: " << ss.str() << endl;
+	//cout << "command: " << ss.str() << endl;
 
 	serialObj << ss.str() << "\n";
 
@@ -97,7 +99,7 @@ void Laser::requestData()
 }
 
 ////////get data + helpers
-vector<vector<double> > Laser::getData(bool timeStamp)
+vector<vector<double> > Laser::getData(bool timeStamp, bool smooth)
 {
 	if (timeStamp) //throw away the time stamp
 	{
@@ -127,6 +129,34 @@ vector<vector<double> > Laser::getData(bool timeStamp)
 	*/
 	string dataSection = extractDataSection(temp, numReads, numValues);
 	vector<double> distanceData = decodeData(dataSection, numValues);
+	
+	if (smooth)
+	{
+		int windowSize = 6;
+		vector<double> padded;
+
+		for (int i = -ceil(windowSize/2); i < distanceData.size() + ceil(windowSize/2); i++)
+		{
+			int t = i;
+			if (i < 0)
+				t = 0;
+			if (i >= distanceData.size())
+				t = distanceData.size() - 1;
+			padded.push_back(distanceData[t]);
+		}
+		
+		cout << "pl: " << padded.size() << " dl: " << distanceData.size() << endl;
+
+		//median filter
+		for (int i = 0; i < distanceData.size(); i++)
+		{
+			vector<double> temp(padded.begin() + i, padded.begin() + i + windowSize);
+			nth_element(temp.begin(), padded.begin() + i + floor(windowSize / 2), temp.end());
+			distanceData[i] = temp[floor(windowSize / 2)];
+		}
+		
+	}
+
 	vector<vector<double> > data = calculateAngles(distanceData);
 
 	/* DEBUG
@@ -149,17 +179,20 @@ vector<vector<double> > Laser::getData(bool timeStamp)
 }
 
 //computted at compile time
-constexpr double pi() { return atan(1) * 4; }
-vector<vector<double> > Laser::getDataCart(bool timeStamp)
+constexpr double pi() { return M_PI; }
+vector<Point> Laser::getDataCart(bool timeStamp, double maxDist, bool smooth)
 {
-	vector<vector<double> > scanData = getData(timeStamp);
-	vector<vector<double> > cartesian;
+	//cout << "calling laser.getData()" << endl;
+	vector<vector<double> > scanData = getData(timeStamp, smooth);
+	vector<Point> cartesian;
 
 	for (int i = 0; i < scanData.size(); i++)
 	{
-		vector<double> current;
-		current.push_back(scanData[i][1] * cos(scanData[i][2] * pi() / 180.0));//x
-		current.push_back(scanData[i][1] * sin(scanData[i][2] * pi() / 180.0));//y
+		if (scanData[i][0] > maxDist)
+			continue;
+		Point current;
+		current.x = scanData[i][0] * cos(scanData[i][1] * pi() / 180.0);
+		current.y = scanData[i][0] * sin(scanData[i][1] * pi() / 180.0);
 		cartesian.push_back(current);
 	}
 	return cartesian;
@@ -180,7 +213,7 @@ string Laser::extractDataSection(string reply, int numReads, int numValues)
 		}
 		else
 			end = dataStart + 64; //read the whole 64 chars
-		cout << "start: " << dataStart << "," << end << endl;
+		//cout << "start: " << dataStart << "," << end << endl;
 		for (int j = dataStart; j < end; j++)
 		{
 			ss << reply[j];
@@ -196,8 +229,6 @@ vector<double> Laser::decodeData(string data, int numValues)
 
 	for (int i = 0; i < data.length(); i++)
 	{
-		if (i == 0)
-			cout << "first: " << (int)data[i] << endl;
 		dataInt.push_back(((int)data[i]) - 48);
 	}
 	
@@ -229,10 +260,10 @@ vector<vector<double> > Laser::calculateAngles(vector<double> distanceData)
 			distanceData[i] = 5000.0;
 		if (distanceData[i] < 0.0)
 		{
-			cout << "neg" << endl;
 			distanceData[i] = 0.0;
 		}
 		vector<double> temp;
+		//cout << "r: " << distanceData[i] << " t: " << angle << endl;
 		temp.push_back(distanceData[i]);
 		temp.push_back(angle);
 		combined.push_back(temp);

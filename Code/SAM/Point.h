@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <sstream>
+#include <math.h>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ public:
 	Point(double x, double y);
 	Point();
 	~Point();
+	double distance(Point other);
 	bool operator==(Point other);
 	string toString();
 };
