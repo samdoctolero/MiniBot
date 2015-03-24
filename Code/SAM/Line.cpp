@@ -26,7 +26,9 @@ Point Line::project(Point other)
 
 double Line::angle(Line other)
 {
-	return atan((m - other.m) / (1 + m*other.m));
+	double ret = atan((m - other.m) / (1 + m*other.m));
+	if (ret >= 0){ return ret; }
+	else { return -ret; }
 }
 
 Line Line::pointsToLine(vector<Point> P, int startIndex, int endIndex)
