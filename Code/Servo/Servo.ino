@@ -11,29 +11,30 @@ f = move forward
 b = move back;
 
 
+
 */
 #include <Servo.h>
 #define ECHO "+\n"
 #define R_WHEEL 3.3    //cm
 #define R_VEHICLE 5.8  //cm
 #define DELAY 0.1 //ms
-float PleftT = 0;
-float PrightT = 0;
+double PleftT = 0;
+double PrightT = 0;
 
-float leftT = 1500;
-float rightT = 1500;
+double leftT = 1500;
+double rightT = 1500;
 
 Servo left, right;
 
-void GivenHeading(float theta);
-void UpdateParams(float l,float r);
+void GivenHeading(double theta);
+void UpdateParams(double l,double r);
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   //Serial.print(ECHO);
-  left.attach(5);
-  right.attach(6);
+  left.attach(6);
+  right.attach(5);
   left.writeMicroseconds(leftT);
   right.writeMicroseconds(rightT);
   //Serial.print(ECHO);
@@ -77,7 +78,7 @@ void loop() {
     else if(str == 't')
     {
       //Serial.print(ECHO);
-      float theta = Serial.parseFloat();
+      double theta = Serial.parseFloat();
       GivenHeading(theta);
       //Serial.print(ECHO);
     }
@@ -109,12 +110,12 @@ void loop() {
     }
     else if(str == 'f')
     {
-      UpdateParams(70,70);
+      UpdateParams(30,30);
       //Serial.print(ECHO);
     }
     else if(str == 'b')
     {
-      UpdateParams(-40,-40);
+      UpdateParams(-25,-25);
       //Serial.print(ECHO);
     }
     else
@@ -123,19 +124,20 @@ void loop() {
       Serial.flush();
     }
   }
+  Serial.flush();
    delay(DELAY); //0.1ms delay
 
 }
 
-void GivenHeading(float theta)
+void GivenHeading(double theta)
 {
-  double a = 100;
-  double l = 10;
-  double r = 0.01;
-  float rpm = theta*15/PI;
-  float T = a*((0.383*rpm+0.2589))*0.0001;
-  float TL = l*T;
-  float TR = r*T;
+  double a = 1;
+  double l = 1;
+  double r = 1;
+  double rpm = abs(theta*15/PI);
+  double T = a*((1.5943*rpm-0.0638))*DELAY;
+  double TL = l*T;
+  double TR = r*T;
   
   if(theta > 0)
   {
@@ -152,7 +154,7 @@ void GivenHeading(float theta)
   }
 }
 
-void UpdateParams(float l, float r)
+void UpdateParams(double l, double r)
 {
   PleftT = l;
   PrightT = r;
@@ -167,8 +169,8 @@ void UpdateParams(float l, float r)
       if(PrightT < 5 && PrightT > -5){PrightT = 0;}
       
       
-        leftT = -PleftT + 1500;
-        rightT = PrightT + 1500;
+        leftT =  (PleftT + 1500);
+        rightT =  (-PrightT + 1500);
         left.writeMicroseconds(leftT);
         right.writeMicroseconds(rightT);
   
