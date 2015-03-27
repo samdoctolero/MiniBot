@@ -1,30 +1,17 @@
-#include <wiringPi.h>
+
 #include <iostream>
 #include <stdlib.h>
-
-#define PHREST 6
+#include "Sensors.h"
 
 using namespace std;
 
 int main()
 {
-	if (wiringPiSetup() == -1)
-	{
-		cout << "WiringPi setup faied..." << endl;
-		exit(1);
-	}
+	Sensors test;
 	
-	pinMode(PHREST, INPUT);
-	int read = 0;
-	while (read == 0)
-	{
-		//if key pressed then exit
+	test.WaitForLight();
 
-		read = digitalRead(PHREST);	
-		delay(1);
-	}
-
-	cout << "Pin low" << endl;
+	cout << "Light detected.\nExiting..." << endl;
 	return 0;
 }
 
