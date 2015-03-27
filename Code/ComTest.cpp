@@ -13,13 +13,14 @@ int main()
 	Servo.BasicCMD(ServoController::START);
 	Servo.BasicCMD(ServoController::FORWARD);
 
-	for (int i = 10; i >- 10;i=i-1)
+	for (int i = 100; i >= -100;i=i-5)
 	{
 		cout << "Heading: " << i<<endl;
 		Servo.AdjustHeading(i);
 		usleep(500000);
 		
 	}
+	Servo.BasicCMD(ServoController::STOP);
 	Servo.BasicCMD(ServoController::STOP);
 	return 0;
 }

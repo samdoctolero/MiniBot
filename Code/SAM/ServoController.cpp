@@ -8,7 +8,7 @@
 
 ServoController::ServoController() : serialObj()
 {
-	name = "/dev/ttyACM0";
+	name = "/dev/ttyACM1";
 
 	serialObj.Open(name);
 
@@ -32,7 +32,7 @@ ServoController::ServoController() : serialObj()
 
 	state = STOP;
 
-	serialObj << "+" << "\n";
+	//serialObj << "+" << "\n";
 }
 
 ServoController::~ServoController()
@@ -65,7 +65,7 @@ bool ServoController::echo()
 
 void ServoController::requestSpeeds()
 {
-	serialObj << "?" << "\n";
+	serialObj << "?" << "\n\0";
 }
 
 void ServoController::readSpeeds(wheel* p)
@@ -89,7 +89,7 @@ void ServoController::updateSpeeds(wheel p)
 		//cout << "Left: " << p.left << "\nRight: " << p.right << endl;
 	//wheel check;
 	//do{
-		serialObj << "!" << p.left << "n" << p.right << "\n";
+		serialObj << "!" << p.left << "n" << p.right << "\n\0";
 		//usleep(50);
 		//requestSpeeds();
 		//readSpeeds(&check);
@@ -165,11 +165,11 @@ void ServoController::BasicCMD(Command cmd)
 		updateSpeeds(update);
 		break;
 	case FORWARD:
-		serialObj << "f" << "\n";
+		serialObj << "f" << "\n\0";
 		state = FORWARD;
 		break;
 	case BACK:
-		serialObj << "b" << "\n";
+		serialObj << "b" << "\n\0";
 		state = BACK;
 		break;
 	case STOP:
@@ -264,10 +264,10 @@ void ServoController::AdjustHeading(double theta)
 
 	updateSpeeds(curT);
 	*/
-	serialObj << "t" << theta  << "\n";
-	requestSpeeds();
-	wheel read;
-	readSpeeds(&read);
+	serialObj << "t" << theta  << "\n\0";
+	//requestSpeeds();
+	//wheel read;
+	//readSpeeds(&read);
 	//cout << "Read...Left: " << read.left << "|| right: " << read.right << endl;
 
 }
